@@ -34,5 +34,8 @@ DROP SEQUENCE editeur_seq;
 DROP SEQUENCE categorie_seq;
 
 DROP TRIGGER nbPrets_trigger;
+DROP TRIGGER nbJours_trigger;
+DROP TRIGGER consult_trigger;
+DROP TRIGGER date_trigger;
 
 SET ECHO OFF
