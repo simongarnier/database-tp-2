@@ -19,7 +19,7 @@ CREATE TABLE Employe
 (
 	idEmploye 			INTEGER PRIMARY KEY REFERENCES Utilisateur(idUtilisateur),
 	codeMatricule 		VARCHAR(20) NOT NULL UNIQUE,
-	categorie			VARCHAR2(10) CHECK( categorie IN ('bibliothecaire', 'employe', 'responsable des adherents', 'responsable des oeuvres') )
+	categorie			VARCHAR2(40) CHECK( categorie IN ('bibliothecaire', 'employe', 'responsable des adherents', 'responsable des oeuvres') )
 );
 
 CREATE TABLE Adherent
@@ -27,7 +27,7 @@ CREATE TABLE Adherent
 	idAdherent 			INTEGER PRIMARY KEY REFERENCES Utilisateur(idUtilisateur),
 	numero 				INTEGER NOT NULL,
 	adresse 			VARCHAR(200) NOT NULL,
-	telephone 			VARCHAR(10) NOT NULL,
+	telephone 			VARCHAR(12) NOT NULL,
 	nbMaxPrets 			INTEGER DEFAULT 3,
 	dureeMaxPrets		INTEGER DEFAULT 4
 );
@@ -35,7 +35,7 @@ CREATE TABLE Adherent
 CREATE TABLE Oeuvre
 (
 	idOeuvre 			INTEGER NOT NULL PRIMARY KEY,
-	titre				VARCHAR(50) NOT NULL
+	titre				VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE Emplacement
@@ -45,6 +45,7 @@ CREATE TABLE Emplacement
 	etagere				Varchar(40) NOT NULL,
 	rayon				Varchar(40) NOT NULL
 );
+
 CREATE TABLE Exemplaire
 (
 	idExemplaire		INTEGER NOT NULL PRIMARY KEY,
@@ -61,7 +62,7 @@ CREATE TABLE Reservation
 	dateFinReservation	DATE,
 	idAdherent			INTEGER REFERENCES Adherent(idAdherent),
 	idExemplaire		INTEGER REFERENCES Exemplaire(idExemplaire)
-)
+);
 
 CREATE TABLE Pret
 (
@@ -127,6 +128,7 @@ CREATE TABLE Film
 	idFilm		 		INTEGER PRIMARY KEY REFERENCES Oeuvre(idOeuvre),
 	duree				INTEGER NOT NULL
 );
+
 
 -- Auto-increment des cles primaires
 
