@@ -48,7 +48,7 @@ BEFORE INSERT ON Pret
 REFERENCING OLD AS OLD NEW AS NEW
 FOR EACH ROW
 DECLARE
-CURSOR Curseur3 IS
+CURSOR Curseur IS
 	SELECT dureeMaxPrets
 	FROM Adherent
 	WHERE Adherent.idAdherent = :NEW.idAdherent;
@@ -58,12 +58,12 @@ maxJours INTEGER;
 
 BEGIN
 maxJours := 0;
-OPEN Curseur3;
-FETCH Curseur3 INTO maxJours;
+OPEN Curseur;
+FETCH Curseur INTO maxJours;
 	IF ((:NEW.dateRetour - :NEW.dateEmprunt) > maxJours) THEN
 		raise_application_error(-20100, 'Le delais maximum de pret pour cet oeuvre est atteint >>');
 	END IF;
-CLOSE Curseur3;
+CLOSE Curseur;
 END nbJours_trigger;
 /
 SHOW ERRORS
@@ -74,7 +74,7 @@ BEFORE INSERT ON Pret
 REFERENCING OLD AS OLD NEW AS NEW
 FOR EACH ROW
 DECLARE
-CURSOR Curseur5 IS
+CURSOR Curseur IS
 	SELECT surPlaceSeulement
 	FROM Exemplaire
 	WHERE Exemplaire.idExemplaire = :NEW.idExemplaire;
@@ -83,12 +83,12 @@ consultation INTEGER;
 
 BEGIN
 consultation :=0;
-OPEN Curseur5;
-FETCH Curseur5 INTO consultation;
+OPEN Curseur;
+FETCH Curseur INTO consultation;
 	IF (consultation = 1) THEN
 		raise_application_error(-20100, 'Cet oeuvre ne peut seulement etre en consultation et ne peut pas etre emprunte >>');
 	END IF;
-CLOSE Curseur5;
+CLOSE Curseur;
 END consult_trigger;
 /
 SHOW ERRORS
@@ -109,12 +109,66 @@ END date_trigger;
 SHOW ERRORS
 
 
--- On ne peut pas emprunter un oeuvre qui est reserve ou emprunter deja
--- il faut verifier le nombre disponibles de exemplaires de cet oeuvre
+-- Verifie si un exemplaire est deja reserve ou emprunte (verifie la disponibilite de l'exemplaire)
+-- si disponible, on change le statut a prete.
+CREATE OR REPLACE TRIGGER emprunt_trigger
+BEFORE INSERT ON Pret
+REFERENCING OLD AS OLD NEW AS NEW
+FOR EACH ROW
+DECLARE
+CURSOR Curseur IS
+	SELECT statut
+	FROM Exemplaire
+	WHERE Exemplaire.idExemplaire = :NEW.idExemplaire;
 
+statut VARCHAR(10);
+BEGIN
+OPEN Curseur;
+FETCH Curseur INTO statut;
+	IF ((statut = 'prete') OR (statut = 'reserve') ) THEN
+		raise_application_error(-20100,'Cet exemplaire ne peut pas etre emprunte.');
+	
+	ELSE
+		UPDATE Exemplaire
+		SET Exemplaire.statut='prete'
+		WHERE Exemplaire.idExemplaire = :NEW.idExemplaire;
+	END IF;
+CLOSE Curseur;
+END emprunt_trigger;
+/
+SHOW ERRORS
 
--- On ne peut pas reserver un exemplaire qui est deja reserver a ce moment la
+-- Verifie si un exemplaire est deja reserve (verifie la date de reservation)
+-- si disponible ou emprunter, on change le statut a reserve.
+CREATE OR REPLACE TRIGGER reserve_trigger
+BEFORE INSERT ON Reservation
+REFERENCING OLD AS OLD NEW AS NEW
+FOR EACH ROW
+DECLARE
+CURSOR Curseur IS
+	SELECT statut
+	FROM Exemplaire
+	WHERE Exemplaire.idExemplaire = :NEW.idExemplaire;
 
+statut VARCHAR(10);
+BEGIN
+OPEN Curseur;
+FETCH Curseur INTO statut;
+	IF (statut = 'reserve') THEN
+		raise_application_error(-20100, 'Cet exemplaire est deja reserve.');
+	ELSE
+		UPDATE Exemplaire
+		SET Exemplaire.statut='reserve'
+		WHERE Exemplaire.idExemplaire = :NEW.idExemplaire;
+	END IF;
+CLOSE Curseur;
+END reserve_trigger;
+/
+SHOW ERRORS;
+
+-- lorsque emprunt fini(dateretour) statut exemplaire devient disponible
+-- ??????
+-- DONNEZ DES IDEES :)
 
 
 SET ECHO OFF
