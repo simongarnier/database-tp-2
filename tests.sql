@@ -28,7 +28,7 @@ INSERT INTO Pret VALUES ('807', TO_DATE('2014/12/02 10:08:49','yyyy/mm/dd hh24:m
 ROLLBACK;
 
 -- Trigger : reserve_trigger
-INSERT INTO Pret VALUES ('808', TO_DATE('2014/12/02 10:08:49','yyyy/mm/dd hh24:mi:ss'),TO_DATE('2014/12/05 10:05:33','yyyy/mm/dd hh24:mi:ss'),'7','24');
+INSERT INTO Reservation VALUES ('808',TO_DATE('2014/12/03 21:02:44','yyyy/mm/dd hh24:mi:ss'),'7','23');
 ROLLBACK;
 
 SET ECHO OFF

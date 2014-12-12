@@ -37,5 +37,7 @@ DROP TRIGGER nbPrets_trigger;
 DROP TRIGGER nbJours_trigger;
 DROP TRIGGER consult_trigger;
 DROP TRIGGER date_trigger;
+DROP TRIGGER emprunt_trigger;
+DROP TRIGGER reserve_trigger;
 
 SET ECHO OFF

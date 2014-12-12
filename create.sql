@@ -17,14 +17,14 @@ CREATE TABLE Utilisateur
 
 CREATE TABLE Employe
 (
-	idEmploye 			INTEGER PRIMARY KEY REFERENCES Utilisateur(idUtilisateur),
+	idEmploye 			INTEGER PRIMARY KEY REFERENCES Utilisateur(idUtilisateur) ON DELETE CASCADE,
 	codeMatricule 		VARCHAR(20) NOT NULL UNIQUE,
 	categorie			VARCHAR2(40) CHECK( categorie IN ('bibliothecaire', 'employe', 'responsable des adherents', 'responsable des oeuvres') )
 );
 
 CREATE TABLE Adherent
 (
-	idAdherent 			INTEGER PRIMARY KEY REFERENCES Utilisateur(idUtilisateur),
+	idAdherent 			INTEGER PRIMARY KEY REFERENCES Utilisateur(idUtilisateur) ON DELETE CASCADE,
 	numero 				INTEGER NOT NULL,
 	adresse 			VARCHAR(200) NOT NULL,
 	telephone 			VARCHAR(12) NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE Emplacement
 CREATE TABLE Exemplaire
 (
 	idExemplaire		INTEGER NOT NULL PRIMARY KEY,
-	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre),
+	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre) ON DELETE CASCADE,
 	statut				VARCHAR2(10) CHECK( statut IN ('prete', 'disponible', 'reserve') ),
 	nomSupport 			VARCHAR2(10) CHECK( nomSupport IN ('livre', 'cassette', 'audio', 'video','CD','DVD') ),
 	surPlaceSeulement 	NUMBER(1) NOT NULL,
-	idEmplacement 		INTEGER REFERENCES Emplacement(idEmplacement)
+	idEmplacement 		INTEGER REFERENCES Emplacement(idEmplacement) ON DELETE CASCADE
 );
 
 CREATE TABLE Reservation
@@ -69,8 +69,8 @@ CREATE TABLE Pret
 	idPret 				INTEGER NOT NULL PRIMARY KEY,
 	dateEmprunt			DATE,
 	dateRetour			DATE,
-	idAdherent			INTEGER REFERENCES Adherent(idAdherent),
-	idExemplaire		INTEGER REFERENCES Exemplaire(idExemplaire)
+	idAdherent			INTEGER REFERENCES Adherent(idAdherent) ON DELETE CASCADE,
+	idExemplaire		INTEGER REFERENCES Exemplaire(idExemplaire) ON DELETE CASCADE
 );
 
 CREATE TABLE Auteur
@@ -94,38 +94,38 @@ CREATE TABLE Categorie
 
 CREATE TABLE AuteurOeuvre
 (
-	idAuteur			INTEGER REFERENCES Auteur(idAuteur),
-	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre)
+	idAuteur			INTEGER REFERENCES Auteur(idAuteur) ON DELETE CASCADE,
+	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre) ON DELETE CASCADE
 );
 
 CREATE TABLE EditeurOeuvre
 (
-	idEditeur			INTEGER REFERENCES Editeur(idEditeur),
-	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre)
+	idEditeur			INTEGER REFERENCES Editeur(idEditeur) ON DELETE CASCADE,
+	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre) ON DELETE CASCADE
 );
 
 CREATE TABLE CategorieOeuvre
 (
-	idCategorie			INTEGER REFERENCES Categorie(idCategorie),
-	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre)
+	idCategorie			INTEGER REFERENCES Categorie(idCategorie) ON DELETE CASCADE,
+	idOeuvre 			INTEGER REFERENCES Oeuvre(idOeuvre) ON DELETE CASCADE
 );
 
 CREATE TABLE Livre
 (
-	idLivre				INTEGER PRIMARY KEY REFERENCES Oeuvre(idOeuvre),
+	idLivre				INTEGER PRIMARY KEY REFERENCES Exemplaire(idExemplaire) ON DELETE CASCADE,
 	ISBN	 			VARCHAR(40) NOT NULL,
 	nbPages				INTEGER NOT NULL
 );
 
 CREATE TABLE Musique
 (
-	idMusique	 		INTEGER PRIMARY KEY REFERENCES Oeuvre(idOeuvre),
+	idMusique	 		INTEGER PRIMARY KEY REFERENCES Exemplaire(idExemplaire) ON DELETE CASCADE,
 	duree				INTEGER NOT NULL
 );
 
 CREATE TABLE Film
 (
-	idFilm		 		INTEGER PRIMARY KEY REFERENCES Oeuvre(idOeuvre),
+	idFilm		 		INTEGER PRIMARY KEY REFERENCES Exemplaire(idExemplaire) ON DELETE CASCADE,
 	duree				INTEGER NOT NULL
 );
 
@@ -230,6 +230,25 @@ BEGIN
   INTO   :new.idCategorie
   FROM   dual;
 END;
+
+
+-- Liste des index
+CREATE INDEX ind_nom ON Utilisateur(nom);
+
+CREATE INDEX ind_codeMatricule ON Employe(codeMatricule);
+
+CREATE INDEX ind_numero ON Adherent(numero);
+
+CREATE INDEX ind_titre ON Oeuvre(titre);
+
+CREATE INDEX ind_nomAuteur ON Auteur(nom);
+
+CREATE INDEX ind_nomEditeur ON Editeur(nomEditeur);
+
+CREATE INDEX ind_categorie ON Categorie(descripteur);
+
+CREATE INDEX ind_ISBN ON Livre(ISBN);
+
 
 SET ECHO OFF
 

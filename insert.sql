@@ -33,7 +33,7 @@ INSERT INTO Categorie VALUES ('56','Base de données');
 INSERT INTO AuteurOeuvre VALUES ('6','10');
 INSERT INTO EditeurOeuvre VALUES ('12','10');
 INSERT INTO CategorieOeuvre VALUES ('56','10');
-INSERT INTO Livre VALUES ('10','978-2-923-56557-6','920');
+INSERT INTO Livre VALUES ('35','978-2-923-56557-6','920');
 
 INSERT INTO Oeuvre VALUES ('25','UML 2 pour les bases de données');
 INSERT INTO Emplacement VALUES ('75','005.74 S7289u','7','Documentaires');
@@ -48,7 +48,9 @@ INSERT INTO Categorie VALUES ('78','UML');
 INSERT INTO AuteurOeuvre VALUES ('45','25');
 INSERT INTO EditeurOeuvre VALUES ('34','25');
 INSERT INTO CategorieOeuvre VALUES ('56','10');
-INSERT INTO Livre VALUES ('25','978-2-212-12091-2','321');
+INSERT INTO Livre VALUES ('23','978-2-212-12091-2','321');
+INSERT INTO Livre VALUES ('22','978-2-212-12091-1','321');
+INSERT INTO Livre VALUES ('24','978-2-212-12091-3','321');
 
 INSERT INTO Oeuvre VALUES ('28','A mind of winter');
 INSERT INTO Emplacement VALUES ('69','CLA 1 B4683-1m','1','Disques compacts');
@@ -59,7 +61,7 @@ INSERT INTO Categorie VALUES ('99','Orchestre');
 INSERT INTO AuteurOeuvre VALUES ('77','28');
 INSERT INTO EditeurOeuvre VALUES ('88','28');
 INSERT INTO CategorieOeuvre VALUES ('99','28');
-INSERT INTO Musique VALUES ('28','71');
+INSERT INTO Musique VALUES ('46','71');
 
 INSERT INTO Oeuvre VALUES ('98','Informatique');
 INSERT INTO Emplacement VALUES ('55','004 I433 1998','3','Vidéo Cassette');
@@ -72,7 +74,7 @@ INSERT INTO AuteurOeuvre VALUES ('48','98');
 INSERT INTO AuteurOeuvre VALUES ('50','98');
 INSERT INTO EditeurOeuvre VALUES ('6','98');
 INSERT INTO CategorieOeuvre VALUES ('123','98');
-INSERT INTO Film VALUES ('98','60');
+INSERT INTO Film VALUES ('33','60');
 
 INSERT INTO Oeuvre VALUES ('15','Les oubliés du XXIe siècle ou la fin du travail');
 INSERT INTO Emplacement VALUES ('827','004 V235 0900','8','Électronique');
@@ -83,7 +85,7 @@ INSERT INTO Categorie VALUES ('456','Économie');
 INSERT INTO AuteurOeuvre VALUES ('9','15');
 INSERT INTO EditeurOeuvre VALUES ('7','15');
 INSERT INTO CategorieOeuvre VALUES ('456','15');
-INSERT INTO Film VALUES ('15','52');
+INSERT INTO Film VALUES ('2','52');
 
 INSERT INTO Reservation VALUES ('009',TO_DATE('2014/12/03 21:02:44','yyyy/mm/dd hh24:mi:ss'),'2','23');
 INSERT INTO Reservation VALUES ('010',TO_DATE('2014/12/03 21:05:50','yyyy/mm/dd hh24:mi:ss'),'2','35');

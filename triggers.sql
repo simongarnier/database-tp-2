@@ -166,9 +166,7 @@ END reserve_trigger;
 /
 SHOW ERRORS;
 
--- lorsque emprunt fini(dateretour) statut exemplaire devient disponible
--- ??????
--- DONNEZ DES IDEES :)
+
 
 
 SET ECHO OFF
