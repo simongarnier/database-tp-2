@@ -7,21 +7,21 @@
 SET ECHO ON
 
 -- Verifie que le nombre de prets d'un adherent ne depasse pas le nombre maximal de prets alloues
-CREATE OR REPLACE TRIGGER nbPrets_trigger 
+CREATE OR REPLACE TRIGGER nbPrets_trigger
 BEFORE INSERT ON Pret
 REFERENCING OLD AS OLD NEW AS NEW
-FOR EACH ROW   
-DECLARE 
+FOR EACH ROW
+DECLARE
 CURSOR Curseur IS
     SELECT COUNT(*)
-    FROM   Pret 
+    FROM   Pret
     WHERE Pret.idAdherent = :NEW.idAdherent;
-	  
+
  CURSOR curseur2 IS
     Select nbMaxPrets
-    From Adherent 
+    From Adherent
     where  Adherent.idAdherent = :NEW.idAdherent;
-  
+
 compteur INT;
 maxPrets INT;
 
@@ -31,8 +31,8 @@ maxPrets := 0;
 
 OPEN Curseur;
 OPEN Curseur2;
-FETCH Curseur INTO compteur;  
-FETCH curseur2 INTO maxPrets;  
+FETCH Curseur INTO compteur;
+FETCH curseur2 INTO maxPrets;
 IF (compteur >= maxPrets) THEN
  raise_application_error(-20100, 'Le nombre maximal de pret est atteint! >>');
 END IF;
@@ -68,7 +68,7 @@ END nbJours_trigger;
 /
 SHOW ERRORS
 
--- Verifie que l'oeuvre ne peut pas etre emprunte s'il est limite a la consultation 
+-- Verifie que l'oeuvre ne peut pas etre emprunte s'il est limite a la consultation
 CREATE OR REPLACE TRIGGER consult_trigger
 BEFORE INSERT ON Pret
 REFERENCING OLD AS OLD NEW AS NEW
@@ -127,7 +127,7 @@ OPEN Curseur;
 FETCH Curseur INTO statut;
 	IF ((statut = 'prete') OR (statut = 'reserve') ) THEN
 		raise_application_error(-20100,'Cet exemplaire ne peut pas etre emprunte.');
-	
+
 	ELSE
 		UPDATE Exemplaire
 		SET Exemplaire.statut='prete'
@@ -166,28 +166,4 @@ END reserve_trigger;
 /
 SHOW ERRORS;
 
---
-CREATE OR REPLACE TRIGGER date_retour_trigger 
-AFTER INSERT ON Pret 
-REFERENCING OLD AS OLD NEW AS NEW 
-FOR EACH ROW 
-DECLARE 
-CURSOR Curseur IS 
-SELECT dureeMaxPrets 
-FROM Adherent 
-WHERE Adherent.idAdherent = :NEW.idAdherent;
-maxJours INTEGER;
-BEGIN 
-maxJours := 0;
-OPEN Curseur; 
- FETCH Curseur INTO maxJours; 
- 		UPDATE Pret 
- 		SET Pret.dateRetour = CURRENT_DATE + maxJours   
- 		WHERE Pret.idPret  = :NEW.idPret ; 
- CLOSE Curseur; 
- END date_retour_trigger; 
- / 
- SHOW ERRORS;
-
-
-SET ECHO OFF
+SET ECHO OFF;
