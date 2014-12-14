@@ -3,7 +3,7 @@
 -- Auteurs
 -- Code permanent: GARS13069209, LACF18048601
 -- Code permanent: PHAC02579100, AMIS25119000
--- 
+--
 --
 SET ECHO ON;
 
@@ -53,7 +53,8 @@ CREATE TABLE Exemplaire
 	statut				VARCHAR2(10) CHECK( statut IN ('prete', 'disponible', 'reserve') ),
 	nomSupport 			VARCHAR2(10) CHECK( nomSupport IN ('livre', 'cassette', 'audio', 'video','CD','DVD') ),
 	surPlaceSeulement 	NUMBER(1) NOT NULL,
-	idEmplacement 		INTEGER REFERENCES Emplacement(idEmplacement) ON DELETE CASCADE
+	idEmplacement 		INTEGER REFERENCES Emplacement(idEmplacement) ON DELETE CASCADE,
+	numeroExamplaire 	VARCHAR2(10) NOT NULL
 );
 
 CREATE TABLE Reservation
@@ -146,6 +147,3 @@ CREATE INDEX ind_ISBN ON Livre(ISBN);
 
 
 SET ECHO OFF;
-
-
-
