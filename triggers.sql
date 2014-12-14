@@ -5,6 +5,9 @@
 -- Code permanent: PHAC02579100, AMIS25119000
 --
 SET ECHO ON
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='yyyy.mm.dd';
+SET SERVEROUTPUT ON SIZE UNLIMITED;
+SPOOL resultats/triggers.res;
 
 -- Verifie que le nombre de prets d'un adherent ne depasse pas le nombre maximal de prets alloues
 CREATE OR REPLACE TRIGGER nbPrets_trigger
@@ -165,5 +168,5 @@ CLOSE Curseur;
 END reserve_trigger;
 /
 SHOW ERRORS;
-
+SPOOL OFF
 SET ECHO OFF;

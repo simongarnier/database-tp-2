@@ -6,6 +6,9 @@
 --
 --
 SET ECHO ON;
+ALTER SESSION SET NLS_TIMESTAMP_FORMAT='yyyy.mm.dd';
+SET SERVEROUTPUT ON SIZE UNLIMITED;
+SPOOL resultats/create.res;
 
 CREATE TABLE Utilisateur
 (
@@ -145,5 +148,5 @@ CREATE INDEX ind_categorie ON Categorie(descripteur);
 
 CREATE INDEX ind_ISBN ON Livre(ISBN);
 
-
+SPOOL OFF
 SET ECHO OFF;
