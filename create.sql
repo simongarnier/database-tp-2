@@ -5,7 +5,7 @@
 -- Code permanent: PHAC02579100, AMIS25119000
 -- 
 --
-SET ECHO ON
+SET ECHO ON;
 
 CREATE TABLE Utilisateur
 (
@@ -129,113 +129,8 @@ CREATE TABLE Film
 	duree				INTEGER NOT NULL
 );
 
-
--- Auto-increment des cles primaires
-
-CREATE SEQUENCE utilisateur_seq;
-SELECT utilisateur_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER utilisateur_increment
-BEFORE INSERT ON Utilisateur
-FOR EACH ROW
-BEGIN
-  SELECT utilisateur_seq.NEXTVAL
-  INTO   :new.idUtilisateur
-  FROM   dual;
-END;
-
-CREATE SEQUENCE oeuvre_seq;
-SELECT oeuvre_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER oeuvre_increment
-BEFORE INSERT ON Oeuvre
-FOR EACH ROW
-BEGIN
-  SELECT oeuvre_seq.NEXTVAL
-  INTO   :new.idOeuvre
-  FROM   dual;
-END;
-
-CREATE SEQUENCE emplacement_seq;
-SELECT emplacement_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER emplacement_increment
-BEFORE INSERT ON Emplacement
-FOR EACH ROW
-BEGIN
-  SELECT emplacement_seq.NEXTVAL
-  INTO   :new.idEmplacement
-  FROM   dual;
-END;
-
-CREATE SEQUENCE exemplaire_seq;
-SELECT exemplaire_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER exemplaire_increment
-BEFORE INSERT ON Exemplaire
-FOR EACH ROW
-BEGIN
-  SELECT exemplaire_seq.NEXTVAL
-  INTO   :new.idExemplaire
-  FROM   dual;
-END;
-
-CREATE SEQUENCE reservation_seq;
-SELECT reservation_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER reservation_increment
-BEFORE INSERT ON Reservation
-FOR EACH ROW
-BEGIN
-  SELECT reservation_seq.NEXTVAL
-  INTO   :new.idReservation
-  FROM   dual;
-END;
-
-CREATE SEQUENCE pret_seq;
-SELECT pret_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER pret_increment
-BEFORE INSERT ON Pret
-FOR EACH ROW
-BEGIN
-  SELECT pret_seq.NEXTVAL
-  INTO   :new.idPret
-  FROM   dual;
-END;
-
-CREATE SEQUENCE auteur_seq;
-SELECT auteur_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER auteur_increment
-BEFORE INSERT ON Auteur
-FOR EACH ROW
-BEGIN
-  SELECT auteur_seq.NEXTVAL
-  INTO   :new.idAuteur
-  FROM   dual;
-END;
-
-CREATE SEQUENCE editeur_seq;
-SELECT editeur_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER editeur_increment
-BEFORE INSERT ON Editeur
-FOR EACH ROW
-BEGIN
-  SELECT editeur_seq.NEXTVAL
-  INTO   :new.idEditeur
-  FROM   dual;
-END;
-
-CREATE SEQUENCE categorie_seq;
-SELECT categorie_seq.NEXTVAL FROM DUAL;
-CREATE OR REPLACE TRIGGER categorie_increment
-BEFORE INSERT ON Categorie
-FOR EACH ROW
-BEGIN
-  SELECT categorie_seq.NEXTVAL
-  INTO   :new.idCategorie
-  FROM   dual;
-END;
-
-
 -- Liste des index
 CREATE INDEX ind_nom ON Utilisateur(nom);
-
-CREATE INDEX ind_codeMatricule ON Employe(codeMatricule);
 
 CREATE INDEX ind_numero ON Adherent(numero);
 
@@ -250,7 +145,7 @@ CREATE INDEX ind_categorie ON Categorie(descripteur);
 CREATE INDEX ind_ISBN ON Livre(ISBN);
 
 
-SET ECHO OFF
+SET ECHO OFF;
 
 
 

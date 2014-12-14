@@ -87,7 +87,7 @@ INSERT INTO EditeurOeuvre VALUES ('7','15');
 INSERT INTO CategorieOeuvre VALUES ('456','15');
 INSERT INTO Film VALUES ('2','52');
 
-INSERT INTO Reservation VALUES ('009',TO_DATE('2014/12/03 21:02:44','yyyy/mm/dd hh24:mi:ss'),'2','23');
+INSERT INTO Reservation VALUES ('009',TO_DATE('2014/12/03 21:02:44','yyyy/mm/dd hh24:mi:ss'),'2','22');
 INSERT INTO Reservation VALUES ('010',TO_DATE('2014/12/03 21:05:50','yyyy/mm/dd hh24:mi:ss'),'2','35');
 
 INSERT INTO Pret VALUES ('800', TO_DATE('2014/12/02 10:02:44','yyyy/mm/dd hh24:mi:ss'),TO_DATE('2014/12/05 10:05:33','yyyy/mm/dd hh24:mi:ss'),'4','23');
