@@ -166,7 +166,28 @@ END reserve_trigger;
 /
 SHOW ERRORS;
 
-
+--
+CREATE OR REPLACE TRIGGER date_retour_trigger 
+AFTER INSERT ON Pret 
+REFERENCING OLD AS OLD NEW AS NEW 
+FOR EACH ROW 
+DECLARE 
+CURSOR Curseur IS 
+SELECT dureeMaxPrets 
+FROM Adherent 
+WHERE Adherent.idAdherent = :NEW.idAdherent;
+maxJours INTEGER;
+BEGIN 
+maxJours := 0;
+OPEN Curseur; 
+ FETCH Curseur INTO maxJours; 
+ 		UPDATE Pret 
+ 		SET Pret.dateRetour = CURRENT_DATE + maxJours   
+ 		WHERE Pret.idPret  = :NEW.idPret ; 
+ CLOSE Curseur; 
+ END date_retour_trigger; 
+ / 
+ SHOW ERRORS;
 
 
 SET ECHO OFF
