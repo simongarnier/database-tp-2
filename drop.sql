@@ -34,16 +34,6 @@ DROP TRIGGER date_trigger;
 DROP TRIGGER emprunt_trigger;
 DROP TRIGGER reserve_trigger;
 
-DROP TRIGGER utilisateur_increment;
-DROP TRIGGER oeuvre_increment;
-DROP TRIGGER emplacement_increment;
-DROP TRIGGER exemplaire_increment;
-DROP TRIGGER reservation_increment;
-DROP TRIGGER pret_increment;
-DROP TRIGGER auteur_increment;
-DROP TRIGGER editeur_increment;
-DROP TRIGGER categorie_increment;
-
 DROP INDEX ind_nom;
 DROP INDEX ind_numero;
 DROP INDEX ind_titre;
